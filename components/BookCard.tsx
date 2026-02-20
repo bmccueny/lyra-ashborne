@@ -26,12 +26,6 @@ export default function BookCard({ book }: { book: Book }) {
               "linear-gradient(to top, rgba(10,7,24,0.8) 0%, transparent 40%)",
           }}
         />
-        <span
-          className="absolute bottom-3 left-3 text-xs uppercase tracking-widest font-semibold"
-          style={{ color: "var(--color-gold)" }}
-        >
-          {book.series} · Bk {book.seriesNumber}
-        </span>
       </div>
 
       {/* Body */}
