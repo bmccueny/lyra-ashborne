@@ -19,7 +19,7 @@ export const books: Book[] = [
     title: "A Crown of Starless Night",
     series: "The Shattered Realm",
     seriesNumber: 1,
-    cover: "https://images.pexels.com/photos/1632790/pexels-photo-1632790.jpeg?auto=compress&cs=tinysrgb&w=600&h=900&fit=crop",
+    cover: "/Books/crown.jpeg",
     blurb:
       "When the last heir to a dying throne must forge an alliance with her sworn enemy, she discovers that some battles are better fought in the dark — and some enemies are dangerously easy to fall in love with.",
     excerpt:
@@ -34,7 +34,7 @@ export const books: Book[] = [
     title: "The Last Veil of Stars",
     series: "The Shattered Realm",
     seriesNumber: 2,
-    cover: "https://images.pexels.com/photos/1252869/pexels-photo-1252869.jpeg?auto=compress&cs=tinysrgb&w=600&h=900&fit=crop",
+    cover: "/Books/veil.jpeg",
     blurb:
       "Bound by a blood oath that neither can break, two rulers who were once lovers must face the truth their kingdoms tried to bury — before the stars themselves go dark.",
     excerpt:
@@ -49,7 +49,7 @@ export const books: Book[] = [
     title: "Witch of the Hollow Wood",
     series: "The Thornwood Chronicles",
     seriesNumber: 1,
-    cover: "https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=600&h=900&fit=crop",
+    cover: "/Books/witch.jpeg",
     blurb:
       "She is the witch the fae fear. He is the prince who was sent to destroy her. In the ancient hollow wood, where magic grows wild and trust is the most dangerous spell of all, they will discover that destiny has a cruel sense of humor.",
     excerpt:
