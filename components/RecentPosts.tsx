@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { posts } from "@/data/posts";
+import posts from "@/data/posts.json";
 import BlogCard from "./BlogCard";
 
 export default function RecentPosts() {

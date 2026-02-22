@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { Post } from "@/data/posts";
+import type { Post } from "@/types/posts";
 
 export default function BlogCard({ post }: { post: Post }) {
   const formatted = new Date(post.date).toLocaleDateString("en-US", {

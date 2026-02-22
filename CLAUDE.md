@@ -3,7 +3,7 @@
 Fantasy romance author site for Lyra Ashborne — book sales, newsletter signups, MDX blog, and fan engagement.
 
 ## Stack
-Next.js 16.1.6 · React 19.2.3 · TypeScript · Tailwind CSS 4 · next-mdx-remote v5 · gray-matter
+Next.js 16.1.6 · React 19.2.3 · TypeScript · Tailwind CSS 4 · next-mdx-remote v5 · gray-matter · @supabase/ssr
 
 ## Structure (flat `app/`)
 ```
@@ -16,6 +16,19 @@ app/blog/[slug]/page.tsx    MDXRemote RSC renderer (async params — Next.js 16 
 app/newsletter/page.tsx     placeholder signup + perks
 app/contact/page.tsx        Contact component (mailto: fallback)
 app/globals.css             design tokens, animations, .prose-fantasy MDX styles
+
+app/admin/layout.tsx        Bare admin shell — sticky header with nav (no site Navbar/Footer)
+app/admin/SignOutButton.tsx "use client" sign-out via Supabase browser client
+app/admin/page.tsx          Dashboard: list all posts from posts.json
+app/admin/PostForm.tsx      Shared post form (new + edit) — "use client"
+app/admin/login/page.tsx    Sign-in form — supabase.auth.signInWithPassword()
+app/admin/new/page.tsx      New post — useActionState(createPost)
+app/admin/edit/[slug]/page.tsx      Load post data (Server Component)
+app/admin/edit/[slug]/EditPostForm.tsx  Pre-filled edit form — useActionState(updatePost)
+
+actions/posts.ts            Server Actions: createPost, updatePost (auth-gated, writes MDX + posts.json)
+
+middleware.ts               Protects /admin/* — redirects unauthenticated users to /admin/login
 
 components/
   Navbar.tsx                fixed, scroll-aware transparent→frosted
@@ -31,11 +44,19 @@ components/
   Contact.tsx               name/email/subject/message + social icons (client)
   Footer.tsx                4-col: logo+tagline, Explore, Series, Follow
 
-content/blog/               3 × .mdx files (gray-matter frontmatter)
+content/blog/               MDX files (gray-matter frontmatter) — written by createPost/updatePost
 data/books.ts               Book interface + 3 books across 2 series
-data/posts.ts               Post interface + 3 metadata entries
-lib/mdx.ts                  getAllSlugs() + getPostBySlug() using fs + gray-matter
+data/posts.json             Post metadata array (migrated from posts.ts) — updated by Server Actions
+types/posts.ts              Post interface (shared)
+lib/mdx.ts                  getAllSlugs() + getPostBySlug() + buildMdxFile() using fs + gray-matter
+lib/supabase/client.ts      createBrowserClient (Client Components)
+lib/supabase/server.ts      createServerClient w/ cookies (Server Components + Actions)
 ```
+
+## Supabase Setup
+- Create project → copy URL + anon key to `.env.local`
+- Manually create Lyra's account in Supabase Auth dashboard (no public signup)
+- `.env.local` vars: `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Design Tokens (globals.css)
 - Midnight bg: `#0A0718` with violet + rose radial gradient orbs, `background-attachment: fixed`
@@ -46,7 +67,7 @@ lib/mdx.ts                  getAllSlugs() + getPostBySlug() using fs + gray-matt
 ## Commands
 ```
 npm run dev      start dev server (port 3000)
-npm run build    production build — 7 static routes
+npm run build    production build
 npm run lint     eslint
 ```
 
@@ -55,3 +76,4 @@ npm run lint     eslint
 - Blog slug page uses `await params` pattern for Next.js 16 + React 19
 - MDX tags field is a YAML array in frontmatter; handled with Array.isArray() guard in [slug]/page.tsx
 - `featuredBook` exported from `data/books.ts` = book with `featured: true`
+- Filesystem writes (MDX + posts.json) won't persist on Vercel — use Railway/Render/DigitalOcean or migrate to Supabase DB

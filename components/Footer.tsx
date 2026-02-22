@@ -135,7 +135,7 @@ export default function Footer() {
             color: "rgba(250,245,255,0.35)",
           }}
         >
-          © {new Date().getFullYear()} Lyra Ashborne. All rights reserved.
+          © {new Date().getFullYear()} Lyra Ashborne. All rights reserved. · Design & Development by <a href="https://mccuestudio.com" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>McCue Studios</a>
         </div>
       </div>
     </footer>

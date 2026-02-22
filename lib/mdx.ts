@@ -20,3 +20,26 @@ export function getPostBySlug(slug: string): {
   const { data, content } = matter(raw);
   return { frontmatter: data as Record<string, string>, content };
 }
+
+export interface MdxFrontmatter {
+  title: string;
+  excerpt: string;
+  date: string;
+  tags: string[];
+  coverImage?: string;
+}
+
+export function buildMdxFile(frontmatter: MdxFrontmatter, body: string): string {
+  const tagYaml = frontmatter.tags.map((t) => `  - ${t}`).join("\n");
+  const cover = frontmatter.coverImage ? `\ncoverImage: "${frontmatter.coverImage}"` : "";
+  return `---
+title: "${frontmatter.title.replace(/"/g, '\\"')}"
+excerpt: "${frontmatter.excerpt.replace(/"/g, '\\"')}"
+date: "${frontmatter.date}"
+tags:
+${tagYaml}${cover}
+---
+
+${body.trim()}
+`;
+}
